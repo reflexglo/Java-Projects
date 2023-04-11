@@ -23,6 +23,7 @@ public class Client extends JPanel implements ActionListener
     ArrayList<Wall> walls;
     
     Client(){
+        //Generate maze and set up goal
         up = false;
         down = false;
         left = false;
@@ -65,7 +66,7 @@ public class Client extends JPanel implements ActionListener
             }
         }
         
-        
+        //Setup window and dimensions
         xDim = 2560;
         yDim = 1440;
         clock = new Timer(10,this);    
@@ -77,6 +78,7 @@ public class Client extends JPanel implements ActionListener
         this.setFocusable(true);
     }
     
+    //Draw functions for UI
     public void drawGoal(Graphics g)
     {
         int[][] points = ai.getPoints(walls);
@@ -100,7 +102,7 @@ public class Client extends JPanel implements ActionListener
             walls.get(close.get(i)).render(g);
         }
     }
-    
+    //Update draw functions
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -111,9 +113,10 @@ public class Client extends JPanel implements ActionListener
     }
     
     
-    
+    //Update game timer every tick
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Collision detection between walls and AI model
         for(Wall w:walls)
         {
             if(w.getLine().intersects(ai.getTBounds()))
@@ -151,16 +154,18 @@ public class Client extends JPanel implements ActionListener
         }
     }
     
-    
+    //Update key/mouse handlers
    public void addNotify(){
        super.addNotify();
          addKeyListener(new KeyHandler());
          addMouseListener(new MouseHandler());
       addMouseMotionListener(new MouseHandler());
    }
+   //Key handler functions
     public class KeyHandler extends KeyAdapter implements KeyListener {
       @Override
       public void keyPressed(KeyEvent e) {        
+          //WASD for movement
         String key = KeyEvent.getKeyText(e.getKeyCode());
         if(key.equals("W"))
           {
@@ -203,6 +208,7 @@ public class Client extends JPanel implements ActionListener
     
      
 }
+    //Mouse handler functions
      public class MouseHandler extends MouseAdapter
     {
       @Override

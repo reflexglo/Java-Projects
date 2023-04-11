@@ -12,6 +12,7 @@ public class BiomeTile{
     int biome;
     int[] bias;
     
+    //Generic biome tile class
     public BiomeTile(int x, int y, int width, int height, int biome, Color color, int b1, int b2, int b3, int b4){
         this.x = x;
         this.y = y;
@@ -50,12 +51,14 @@ public class BiomeTile{
         this.bias[3] = b4;
     }
     
+    //Render tile
     public void render(Graphics g){    
         g.setColor(color);
         g.drawRect(x, y, width, height);
          g.setColor(color);
          g.fillRect(x, y, width, height);
     }
+    //Set and get methods for fields
     public void setX(int x){
         this.x = x;
     }
@@ -81,6 +84,7 @@ public class BiomeTile{
     public void setBias(int biasValue, int biasNum){
         this.bias[biasNum] = biasValue;
     }
+    //Get bounds of tile
     public Rectangle getBounds(){
         return new Rectangle(x,y,width,height);
     }

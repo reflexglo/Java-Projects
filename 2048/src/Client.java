@@ -21,6 +21,7 @@ public class Client extends JPanel implements ActionListener
     int money;
     
     Client(){
+        //Set up board tiles
         money = 0;
         board = new Tile[4][4];
         for(int i = 0;i<4;i++)
@@ -42,6 +43,7 @@ public class Client extends JPanel implements ActionListener
             board[randX][randY].setNum(4);
         }
         
+        //Set up window and dimensions
         int xDim = 2560;
         int yDim = 1440;
         clock = new Timer(10,this);    
@@ -53,6 +55,7 @@ public class Client extends JPanel implements ActionListener
         this.setFocusable(true);
     }
     
+    //Draw functions for UI
     public void drawBoard(Graphics g)
     {
         for(int i = 0;i<4;i++)
@@ -71,6 +74,7 @@ public class Client extends JPanel implements ActionListener
         g.drawString("Money: "+money, 100, 100);
     }
     
+    //Update draw functions
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -79,7 +83,7 @@ public class Client extends JPanel implements ActionListener
         repaint();
     }
     
-    
+    //Update key and mouse listeners
    public void addNotify(){
        super.addNotify();
          addKeyListener(new KeyHandler());
@@ -87,6 +91,7 @@ public class Client extends JPanel implements ActionListener
       addMouseMotionListener(new MouseHandler());
    }
    
+   //Increase number of all tiles by 2 times
    public void incNums()
    {
        for(int i = 0;i<4;i++)
@@ -98,6 +103,7 @@ public class Client extends JPanel implements ActionListener
        }
    }
    
+   //Slide board up
    public int slideUp()
    {
        int cnt = 0;
@@ -149,6 +155,7 @@ public class Client extends JPanel implements ActionListener
        return cnt;
    }
    
+   //Slide board down
    public int slideDown()
    {
        int cnt = 0;
@@ -200,6 +207,7 @@ public class Client extends JPanel implements ActionListener
        return cnt;
    }
    
+   //Slide board right
    public int slideRight()
    {
        int cnt = 0;
@@ -250,6 +258,7 @@ public class Client extends JPanel implements ActionListener
        return cnt;
    }
    
+   //Slide board left
    public int slideLeft()
    {
        int cnt = 0;
@@ -301,6 +310,7 @@ public class Client extends JPanel implements ActionListener
        return cnt;
    }
    
+   //Spawn a new tile after a slide
    public void spawnTile()
    {
        ArrayList<Tile> empty = new ArrayList<Tile>();
@@ -326,10 +336,12 @@ public class Client extends JPanel implements ActionListener
        }
    }
 
+   //Update game timer every tick
     @Override
     public void actionPerformed(ActionEvent e) {
         
     }
+    //Key handler functions
     public class KeyHandler extends KeyAdapter implements KeyListener {
       @Override
       public void keyPressed(KeyEvent e) {        
@@ -339,6 +351,7 @@ public class Client extends JPanel implements ActionListener
       @Override
       public void keyReleased(KeyEvent e)
       {
+          //Arrow keys for sliding, space for increase whole board
           String key = KeyEvent.getKeyText(e.getKeyCode());
           if(key.equals("Up"))
           {
@@ -377,6 +390,7 @@ public class Client extends JPanel implements ActionListener
     
      
 }
+    //Mouse handler functions
      public class MouseHandler extends MouseAdapter
     {
       @Override

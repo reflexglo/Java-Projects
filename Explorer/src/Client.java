@@ -32,6 +32,7 @@ public class Client extends JPanel implements ActionListener {
     ArrayList<String> path;
     int zoom = 2;
     Client() {
+        //Retrieve map data from map generation file, init map
         destination = "-1,-1";
         tiles = new HashMap<String,BiomeTile>();
         land = new HashMap<String,BiomeTile>();
@@ -64,6 +65,8 @@ public class Client extends JPanel implements ActionListener {
     }
         String spawn = (String)land.keySet().toArray()[(int)(Math.random()*land.values().size())];
         player = new Player(Integer.parseInt(spawn.split(",")[0]),Integer.parseInt(spawn.split(",")[1]),2,2,Color.BLACK);
+        
+        //Setup window and dimensions
         xDim = 2650;
         yDim = 1440;
         Dimension dim = new Dimension(xDim, yDim);
@@ -74,6 +77,7 @@ public class Client extends JPanel implements ActionListener {
         clock = new Timer(1, this);
         clock.start();
     }
+    //Draw functions for UI
     public void drawIslands(Graphics g)
     {
         for(BiomeTile tile : land.values())
@@ -110,7 +114,7 @@ public class Client extends JPanel implements ActionListener {
     {
         player.render(g);
     }
-    
+    //Update draw functions every frame
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -122,9 +126,10 @@ public class Client extends JPanel implements ActionListener {
         drawPlayer(g);
         repaint();
     }
-
+    //Update game timer every tick
     @Override
     public void actionPerformed(ActionEvent e) {
+        //If player's path is not empty, advance to next node
         if(path.size()> 0)
         {
             int newX = Integer.parseInt(path.get(path.size()-1).split(",")[0]);
@@ -139,6 +144,7 @@ public class Client extends JPanel implements ActionListener {
         }
     }
 
+    //Update key and mouse handler functions
     public void addNotify() {
         super.addNotify();
         addKeyListener(new KeyHandler());
@@ -146,10 +152,12 @@ public class Client extends JPanel implements ActionListener {
         addMouseMotionListener(new MouseHandler());
     }
 
+    //Key handler functions
     public class KeyHandler extends KeyAdapter implements KeyListener {
 
         @Override
         public void keyPressed(KeyEvent e) {
+            //Arrow keks to move on land, use B to move from land to water, space to zoom in/out of map
             String key = KeyEvent.getKeyText(e.getKeyCode());
             String coords = player.getX()+","+player.getY();
             if(boating == false)
@@ -237,6 +245,7 @@ public class Client extends JPanel implements ActionListener {
 
     }
 
+    //Creates string representation of path
     public String getPath(Node endNode)
     {
         String path = "";
@@ -248,6 +257,7 @@ public class Client extends JPanel implements ActionListener {
         return path;
     }
     
+    //Calculates value of current path
      public boolean worthTrip(Node curNode, Node newNode, HashMap<String,Integer> pos)
     {
         int value1 = 0;
@@ -267,6 +277,7 @@ public class Client extends JPanel implements ActionListener {
         return value1 > value2;
     }
     
+     //Uses A* Hueristic algorithm to determine a path to selected destination
     public void setDest(int destX, int destY)
     {
         HashMap<String,Integer> pos = new HashMap<String,Integer>();
@@ -358,7 +369,7 @@ public class Client extends JPanel implements ActionListener {
                     lastNode = lastNode.getPrev();
                 }
     }
-    
+    //Mouse handler functions
     public class MouseHandler extends MouseAdapter {
         //is called when the mouse is moved
         @Override
@@ -368,6 +379,7 @@ public class Client extends JPanel implements ActionListener {
         //is called when the mouse button is pressed
         @Override
         public void mousePressed(MouseEvent e) {
+            //Press on the desired location to travel to, must be in water first
             if(boating && !destSet)
             {
                 int x = e.getX();

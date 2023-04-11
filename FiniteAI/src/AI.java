@@ -5,10 +5,7 @@ import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import javafx.util.Pair;
 
-/**
- *
- * @author Mr. Maroney
- */
+//Generic AI class
 public class AI{
     
     int x;
@@ -24,7 +21,7 @@ public class AI{
         this.height = height;
         this.color = color;
     }
-    
+    //Gets all walls in view of AI to list
     public ArrayList<Integer> getViewWalls(ArrayList<Wall> walls)
     {
         float step = 0.01f;
@@ -41,6 +38,7 @@ public class AI{
         return seen;
     }
     
+    //Gets the closest wall in view of the AI
     public int getCloseWall(ArrayList<Wall> walls, float angle)
     {
         ArrayList<Pair<Integer,Integer>> points = new ArrayList<Pair<Integer,Integer>>();
@@ -96,6 +94,7 @@ public class AI{
         return ind;
     }
     
+    //Gets list of points within AI field of view
     public int[][] getPoints(ArrayList<Wall> walls)
     {
         float step = 0.01f;
@@ -168,7 +167,7 @@ public class AI{
          points[1] = yps;
          return points;
     }
-    
+    //Renders AI and field of view lines
     public void render(Graphics g, ArrayList<Wall> walls){
          ArrayList<Integer> xp = new ArrayList<Integer>();
          ArrayList<Integer> yp = new ArrayList<Integer>();
@@ -182,6 +181,7 @@ public class AI{
         g.setColor(color);
          g.fillRect(x-width/2, y-height/2, width, height);
     }
+    //Get and set methods for fields
     public void setX(int x){
         this.x = x;
     }
@@ -197,7 +197,7 @@ public class AI{
         return y;
     }
     
-    
+    //Get methods for AI bounds
     public Rectangle getTBounds(){
         return new Rectangle(x-2,y-height/2,4,4);
     }

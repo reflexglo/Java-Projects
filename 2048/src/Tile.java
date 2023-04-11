@@ -11,6 +11,7 @@ public class Tile{
     int width;
     int num;
     
+    //Generic Tile class
     public Tile(int x, int y, int width, int height, int num, Color color){
         this.x = x;
         this.y = y;
@@ -20,6 +21,7 @@ public class Tile{
         this.num = num;
     }
     
+    //Log base 2 function
     public int pow2(int num)
     {
         int pow = 0;
@@ -32,6 +34,7 @@ public class Tile{
         return pow;
     }
     
+    //Renders blank if no number, colored tile if number
     public void render(Graphics g){      
         if(num == 0)
         {
@@ -50,10 +53,10 @@ public class Tile{
             g.drawString(num+"", x+width/2, y+height/2);
         }
     }
+    //Set and get methods for fields
     public void setX(int x){
         this.x = x;
     }
-    
     public void setY(int y){
         this.y = y; 
     }
@@ -79,6 +82,7 @@ public class Tile{
     {
         return num;
     }
+    //Get bounds of tile
     public Rectangle getBounds(){
         return new Rectangle(x,y,width,height);
     }

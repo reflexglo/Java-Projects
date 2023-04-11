@@ -29,6 +29,7 @@ public class Client extends JPanel implements ActionListener {
     BiomeTile checker;
     boolean exported;
     Client() {
+        //Setup biome lists and generation parameters
         generate = new ArrayList<BiomeTile>();
         setBiomes = new ArrayList<BiomeTile>();
         newBiomes = new ArrayList<BiomeTile>();
@@ -71,7 +72,7 @@ public class Client extends JPanel implements ActionListener {
             generate.add(new BiomeTile(randX,randY,pix,pix,randBiome,Color.BLACK,b1,b2,b3,b4));
             coords.add(randX+" "+randY);
         }
-        
+        //Set up window and dimensions
         xDim = 2650;
         yDim = 1440;   
         Dimension dim = new Dimension(xDim, yDim);
@@ -82,11 +83,13 @@ public class Client extends JPanel implements ActionListener {
         clock = new Timer(30, this);
         clock.start();
     }
+    //Draw functions for UI
     public void drawTiles(Graphics g){
         for(int i = 0;i<setBiomes.size();i++){
             setBiomes.get(i).render(g);
         }
     }
+     //Update draw functions
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -101,9 +104,10 @@ public class Client extends JPanel implements ActionListener {
         drawTiles(g);
         repaint();
     }
-
+    //Update game timer every tick
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Procedural map generation function
         if(setBiomes.size()<numTiles){
             System.out.println(setBiomes.size());
             for(int i = 0;i<generate.size();i++){
@@ -111,9 +115,11 @@ public class Client extends JPanel implements ActionListener {
                 int newY = generate.get(i).getY();
                 int newBi = generate.get(i).getBiome();
                 int makeNewBi = (int)(Math.random()*(5*newBi+10));
+                //Controls whether current generation tile progresses to next biome type
                 if(makeNewBi == 0){
                     newBi = newBi+1;
                 }
+                //Checks right tile, generates new biome tile if empty
                 String newCoord = "";
                 checker.setX(newX+pix);
                 checker.setY(newY);
@@ -129,6 +135,7 @@ public class Client extends JPanel implements ActionListener {
                         coords.add(newCoord);
                     }
                 }
+                //Checks left tile, generates new biome tile if empty
                 checker.setX(newX-pix);
                 checker.setY(newY);
                 newCoord = checker.getX()+" "+checker.getY();
@@ -143,6 +150,7 @@ public class Client extends JPanel implements ActionListener {
                         coords.add(newCoord);
                     }
                 }
+                //Checks bottom tile, generates new biome tile if empty
                 checker.setX(newX);
                 checker.setY(newY+pix);
                 newCoord = checker.getX()+" "+checker.getY();
@@ -157,6 +165,7 @@ public class Client extends JPanel implements ActionListener {
                         coords.add(newCoord);
                     }
                 }
+                //Checks top tile, generates new biome tile if empty
                 checker.setX(newX);
                 checker.setY(newY-pix);
                 newCoord = checker.getX()+" "+checker.getY();
@@ -172,6 +181,7 @@ public class Client extends JPanel implements ActionListener {
                     }
                 }
             }
+            //Set up generation lists for next iteration
             for(int i = 0;i<generate.size();i++){
                 setBiomes.add(generate.get(i));
                 generate.remove(i);
@@ -181,6 +191,7 @@ public class Client extends JPanel implements ActionListener {
                 newBiomes.remove(i);
             }
         }
+        //Export map as file if complete
         if(setBiomes.size() >= numTiles && !exported){
             System.out.println("exporting");
             try{
@@ -199,14 +210,14 @@ public class Client extends JPanel implements ActionListener {
             }
         }
     }
-
+//Update key and mouse listeners
     public void addNotify() {
         super.addNotify();
         addKeyListener(new KeyHandler());
         addMouseListener(new MouseHandler());
         addMouseMotionListener(new MouseHandler());
     }
-
+//Key Handler functions
     public class KeyHandler extends KeyAdapter implements KeyListener {
 
         @Override
@@ -216,11 +227,12 @@ public class Client extends JPanel implements ActionListener {
         }
 
     }
-
+//Mouse handler functions
     public class MouseHandler extends MouseAdapter {
         //is called when the mouse is moved
         @Override
         public void mouseMoved(MouseEvent e) {
+            //Adjust mouse offset
                 if(e.getX() < 1280)
                 {
                     mOffX = -(1280-e.getX())/200;

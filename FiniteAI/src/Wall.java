@@ -3,10 +3,7 @@ import java.awt.Graphics;
 import java.awt.*;
 import java.awt.geom.Line2D;
 
-/**
- *
- * @author Mr. Maroney
- */
+//Generic wall class
 public class Wall{
     
     int x;
@@ -22,7 +19,7 @@ public class Wall{
         this.height = height;
         this.color = color;
     }
-    
+    //Render wall
     public void render(Graphics g){
        
         Graphics2D g2d = (Graphics2D)g;
@@ -30,6 +27,7 @@ public class Wall{
          g.setColor(Color.RED);
          g.drawLine(x,y,width,height);
     }
+    //Get and set methods for fields
     public void setX(int x){
         this.x = x;
     }
@@ -45,11 +43,11 @@ public class Wall{
         return y;
     }
 
-    
+    //Get rectangle bounds of wall
     public Rectangle getBounds(){
         return new Rectangle(x,y,width-x+5,height-y+5);
     }
-    
+    //Get line bounds of wall
     public Line2D getLine()
     {
         return new Line2D.Float(x,y,width,height);

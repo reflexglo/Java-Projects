@@ -5,6 +5,7 @@ public class BiomeTile {
     int width;
     int height;
     boolean trace;
+    //Generic biome tile class
     public BiomeTile(int x, int y, int width, int height, int biome)
     {
         this.x = x;
@@ -13,6 +14,7 @@ public class BiomeTile {
         this.height = height;
         this.biome = biome;
     }
+    //Get and set methods for fields
     public int getX()
     {
         return x;
